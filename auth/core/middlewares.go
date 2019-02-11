@@ -18,8 +18,8 @@ func RequireTokenAuthentication(rw http.ResponseWriter, req *http.Request, next 
 		}
 	})
 
-	//if err == nil && token.Valid && !authBackend.IsInBlacklist(req.Header.Get("Authorization")) {
-	if err == nil && token.Valid  {
+	if err == nil && token.Valid && !authBackend.IsInBlacklist(req.Header.Get("Authorization")) {
+	//if err == nil && token.Valid  {
 		next(rw, req)
 	} else {
 		rw.WriteHeader(http.StatusUnauthorized)

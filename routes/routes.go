@@ -36,11 +36,23 @@ var routes = model.Routes{
 	model.Route{
 		"Login",
 		"POST",
-		"/login",
+		"/token-auth",
 		authController.Login,
 	},
 }
 var routesHandle = model.RoutesHandle{
+	model.RouteHandle{
+		"RefeshToken",
+		"GET",
+		"/refresh-token-auth",
+		FilterMiddleware(authController.RefreshToken ),
+	},
+	model.RouteHandle{
+		"Logout",
+		"GET",
+		"/logout",
+		FilterMiddleware(authController.Logout ),
+	},
 	model.RouteHandle{
 		"Test",
 		"GET",

@@ -2,6 +2,8 @@ package service
 
 import (
 	"encoding/json"
+	"github.com/dgrijalva/jwt-go"
+	"github.com/dgrijalva/jwt-go/request"
 	"github.com/edumar111/fastpv-auth/auth/core"
 	"github.com/edumar111/fastpv-auth/auth/model"
 	"github.com/edumar111/fastpv-auth/auth/parameters"
@@ -21,4 +23,28 @@ func Login(requestUser *model.UserLogin) (int, []byte) {
 		}
 	}
 	return http.StatusUnauthorized, []byte("")
+}
+func RefreshToken(requestUser *model.UserLogin) []byte {
+	authBackend := core.InitJWTAuthenticationBackend()
+	token, err := authBackend.GenerateToken(requestUser.Username)
+	if err != nil {
+		panic(err)
+	}
+	response, err := json.Marshal(parameters.TokenAuthentication{token})
+	if err != nil {
+		panic(err)
+	}
+	return response
+}
+
+func Logout(req *http.Request) error {
+	authBackend := core.InitJWTAuthenticationBackend()
+	tokenRequest, err := request.ParseFromRequest(req, request.OAuth2Extractor, func(token *jwt.Token) (interface{}, error) {
+		return authBackend.PublicKey, nil
+	})
+	if err != nil {
+		return err
+	}
+	tokenString := req.Header.Get("Authorization")
+	return authBackend.Logout(tokenString, tokenRequest)
 }

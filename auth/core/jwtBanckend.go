@@ -7,6 +7,7 @@ import (
 	"encoding/pem"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/edumar111/fastpv-auth/auth/model"
+	"github.com/edumar111/fastpv-auth/auth/redis"
 	"golang.org/x/crypto/bcrypt"
 	"log"
 
@@ -75,7 +76,7 @@ func (backend *JWTAuthenticationBackend) Authenticate(user *model.UserLogin) boo
 	return user.Username == testUser.Username && bcrypt.CompareHashAndPassword([]byte(testUser.Password), []byte(user.Password)) == nil
 }
 
-/*
+
 func (backend *JWTAuthenticationBackend) IsInBlacklist(token string) bool {
 	redisConn := redis.Connect()
 	redisToken, _ := redisConn.GetValue(token)
@@ -85,8 +86,22 @@ func (backend *JWTAuthenticationBackend) IsInBlacklist(token string) bool {
 	}
 
 	return true
-}*/
+}
 
+func (backend *JWTAuthenticationBackend) Logout(tokenString string, token *jwt.Token) error {
+	redisConn := redis.Connect()
+	return redisConn.SetValue(tokenString, tokenString, backend.getTokenRemainingValidity(token.Claims.(jwt.MapClaims)["exp"]))
+}
+func (backend *JWTAuthenticationBackend) getTokenRemainingValidity(timestamp interface{}) int {
+	if validity, ok := timestamp.(float64); ok {
+		tm := time.Unix(int64(validity), 0)
+		remainer := tm.Sub(time.Now())
+		if remainer > 0 {
+			return int(remainer.Seconds() + expireOffset)
+		}
+	}
+	return expireOffset
+}
 //getPrivateKey get private key RSA
 func getPrivateKey() *rsa.PrivateKey {
 	privateKeyFile, err := os.Open(settings.Get().PrivateKeyPath)
