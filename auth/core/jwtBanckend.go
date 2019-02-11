@@ -75,6 +75,18 @@ func (backend *JWTAuthenticationBackend) Authenticate(user *model.UserLogin) boo
 	return user.Username == testUser.Username && bcrypt.CompareHashAndPassword([]byte(testUser.Password), []byte(user.Password)) == nil
 }
 
+/*
+func (backend *JWTAuthenticationBackend) IsInBlacklist(token string) bool {
+	redisConn := redis.Connect()
+	redisToken, _ := redisConn.GetValue(token)
+
+	if redisToken == nil {
+		return false
+	}
+
+	return true
+}*/
+
 //getPrivateKey get private key RSA
 func getPrivateKey() *rsa.PrivateKey {
 	privateKeyFile, err := os.Open(settings.Get().PrivateKeyPath)
