@@ -1,5 +1,6 @@
 {
   "PrivateKeyPath": "/Users/Edumar/go/src/github.com/edumar111/fastpv-auth/settings/keys/private_key",
   "PublicKeyPath": "/Users/Edumar/go/src/github.com/edumar111/fastpv-auth/settings/keys/public_key.pub",
-  "JWTExpirationDelta": 72
+  "JWTExpirationDelta": 72,
+  "RedisHost": "localhost:6379"
 }

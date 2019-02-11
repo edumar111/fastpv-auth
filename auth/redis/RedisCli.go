@@ -3,6 +3,8 @@ package redis
 
 import (
 "github.com/garyburd/redigo/redis"
+	"github.com/edumar111/fastpv-auth/settings"
+	"log"
 )
 
 type RedisCli struct {
@@ -15,8 +17,8 @@ func Connect() (conn *RedisCli) {
 	if instanceRedisCli == nil {
 		instanceRedisCli = new(RedisCli)
 		var err error
-
-		instanceRedisCli.conn, err = redis.Dial("tcp", ":6379")
+		log.Println(settings.Get().RedisHost)
+		instanceRedisCli.conn, err = redis.Dial("tcp",settings.Get().RedisHost)
 
 		if err != nil {
 			panic(err)

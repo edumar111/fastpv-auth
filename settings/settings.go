@@ -8,8 +8,8 @@ import (
 )
 
 var environments = map[string]string{
-	"production":    "settings/prod.json",
-	"preproduction": "settings/pre.json",
+	"production":    "/settings/prod.json",
+	"preproduction": "/settings/pre.json",
 
 }
 
@@ -17,6 +17,7 @@ type Settings struct {
 	PrivateKeyPath     string
 	PublicKeyPath      string
 	JWTExpirationDelta int
+	RedisHost        string
 }
 
 var settings Settings = Settings{}
