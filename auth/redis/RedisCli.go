@@ -18,16 +18,16 @@ func Connect() (conn *RedisCli) {
 		instanceRedisCli = new(RedisCli)
 		var err error
 		log.Println(settings.Get().RedisHost)
-		instanceRedisCli.conn, err = redis.Dial("tcp",settings.Get().RedisHost)
+		instanceRedisCli.conn, err = redis.DialURL(settings.Get().RedisHost)
 
 		if err != nil {
 			panic(err)
 		}
 
-		/*if _, err := instanceRedisCli.conn.Do("AUTH", "Brainattica"); err != nil {
+		if _, err := instanceRedisCli.conn.Do("AUTH", "fastpv123"); err != nil {
 			instanceRedisCli.conn.Close()
 			panic(err)
-		}*/
+		}
 	}
 
 	return instanceRedisCli

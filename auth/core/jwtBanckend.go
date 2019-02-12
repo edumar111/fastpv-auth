@@ -78,9 +78,13 @@ func (backend *JWTAuthenticationBackend) Authenticate(user *model.UserLogin) boo
 
 
 func (backend *JWTAuthenticationBackend) IsInBlacklist(token string) bool {
-	redisConn := redis.Connect()
-	redisToken, _ := redisConn.GetValue(token)
 
+	redisConn := redis.Connect()
+	redisToken, error := redisConn.GetValue(token)
+	if error != nil{
+		log.Println(error)
+	}
+	log.Println(redisToken)
 	if redisToken == nil {
 		return false
 	}
@@ -89,8 +93,11 @@ func (backend *JWTAuthenticationBackend) IsInBlacklist(token string) bool {
 }
 
 func (backend *JWTAuthenticationBackend) Logout(tokenString string, token *jwt.Token) error {
+
 	redisConn := redis.Connect()
+
 	return redisConn.SetValue(tokenString, tokenString, backend.getTokenRemainingValidity(token.Claims.(jwt.MapClaims)["exp"]))
+
 }
 func (backend *JWTAuthenticationBackend) getTokenRemainingValidity(timestamp interface{}) int {
 	if validity, ok := timestamp.(float64); ok {

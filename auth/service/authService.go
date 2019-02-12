@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/edumar111/fastpv-auth/auth/core"
@@ -46,5 +47,9 @@ func Logout(req *http.Request) error {
 		return err
 	}
 	tokenString := req.Header.Get("Authorization")
-	return authBackend.Logout(tokenString, tokenRequest)
+	err = authBackend.Logout(tokenString, tokenRequest)
+	if err != nil {
+		fmt.Println(err)
+	}
+	return err
 }

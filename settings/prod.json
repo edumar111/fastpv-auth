@@ -1,6 +1,6 @@
 {
   "PrivateKeyPath": "/settings/keys/private_key",
   "PublicKeyPath": "/settings/keys/public_key.pub",
-  "RedisHost": "redis:6380",
+  "RedisHost": "redis://fastpv123@redis:6380",
   "JWTExpirationDelta": 72
 }
