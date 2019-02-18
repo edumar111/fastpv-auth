@@ -1,9 +1,8 @@
 package redis
 
-
 import (
-"github.com/garyburd/redigo/redis"
-	"github.com/edumar111/fastpv-auth/settings"
+	"github.com/edumar111/fastpv-auth/helper"
+	"github.com/garyburd/redigo/redis"
 	"log"
 )
 
@@ -17,8 +16,8 @@ func Connect() (conn *RedisCli) {
 	if instanceRedisCli == nil {
 		instanceRedisCli = new(RedisCli)
 		var err error
-		log.Println(settings.Get().RedisHost)
-		instanceRedisCli.conn, err = redis.DialURL(settings.Get().RedisHost)
+		log.Println(helper.RedisHost)
+		instanceRedisCli.conn, err = redis.DialURL(helper.RedisHost)
 
 		if err != nil {
 			panic(err)
