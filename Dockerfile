@@ -16,8 +16,8 @@ COPY --from=builder /go/src/github.com/edumar111/fastpv-auth/settings /settings
 CMD ["/auth"]
 
 # docker login
-# docker build -t edumar111/fastpv-auth:v1.0.1 -f Dockerfile .
-# docker push     edumar111/fastpv-auth:v1.0.1
+# docker build -t edumar111/fastpv-auth:v1.0.2 -f Dockerfile .
+# docker push     edumar111/fastpv-auth:v1.0.2
 
 # docker run  -itd  --name astpv-auth -p 8080:8080 --link fastpv-redis:fastpv-redis -e HOST_REDIS=fastpv-redis -e PORT_REDIS=6380 -e PASS_REDIS=fastpv123 -e GO_ENV=production edumar111/fastpv-auth:v1.0.1
 

@@ -20,6 +20,7 @@ func Login(requestUser *model.UserLogin) (int, []byte) {
 			return http.StatusInternalServerError, []byte("")
 		} else {
 			response, _ := json.Marshal(parameters.TokenAuthentication{token})
+			fmt.Println("Ok")
 			return http.StatusOK, response
 		}
 	}

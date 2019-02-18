@@ -19,7 +19,7 @@ func Login(w http.ResponseWriter , r *http.Request){
 	responseStatus, token := service.Login(requestUser)
 		w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(responseStatus)
-
+	fmt.Println(string(token))
 	w.Write(token)
 }
 func RefreshToken(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {

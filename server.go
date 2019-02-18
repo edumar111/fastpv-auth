@@ -5,13 +5,13 @@ import (
 	"flag"
 	"github.com/edumar111/fastpv-auth/routes"
 	"github.com/edumar111/fastpv-auth/settings"
+	"github.com/gorilla/handlers"
 	"github.com/urfave/negroni"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"time"
-
-	"net/http"
 )
 
 func main (){
@@ -32,7 +32,10 @@ func main (){
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
 		IdleTimeout:  time.Second * 60,
-		Handler: n, // Pass our instance of gorilla/mux in.
+		Handler: handlers.CORS(
+			handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
+			handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS"}),
+			handlers.AllowedOrigins([]string{"*"}))(n), // Pass our instance of gorilla/mux in.
 	}
 
 	// Run our server in a goroutine so that it doesn't block.
