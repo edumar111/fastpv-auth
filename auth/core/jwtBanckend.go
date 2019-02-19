@@ -8,7 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/edumar111/fastpv-auth/auth/model"
 	"github.com/edumar111/fastpv-auth/auth/redis"
-	"golang.org/x/crypto/bcrypt"
+	"github.com/edumar111/fastpv-auth/tools"
 	"log"
 
 	"github.com/edumar111/fastpv-auth/settings"
@@ -64,8 +64,8 @@ func (backend *JWTAuthenticationBackend) GenerateToken(username string) (string,
 
 //Authenticate validate usernama and password
 func (backend *JWTAuthenticationBackend) Authenticate(user *model.UserLogin) bool {
-	log.Println("Authenticate")
-	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte("123456"), 10)
+
+	hashedPassword, _ := tools.HashPassword("123456")
 
 	testUser := model.UserLogin{
 		ID:     0,
@@ -73,9 +73,10 @@ func (backend *JWTAuthenticationBackend) Authenticate(user *model.UserLogin) boo
 		Password: string(hashedPassword),
 	}
 
-	return user.Username == testUser.Username && bcrypt.CompareHashAndPassword([]byte(testUser.Password), []byte(user.Password)) == nil
-}
+	//return user.Username == testUser.Username && bcrypt.CompareHashAndPassword([]byte(testUser.Password), []byte(user.Password)) == nil
+	return user.Username == testUser.Username && tools.CheckHashAndPassword(testUser.Password,user.Password)
 
+	}
 
 func (backend *JWTAuthenticationBackend) IsInBlacklist(token string) bool {
 
