@@ -8,7 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/edumar111/fastpv-auth/auth/model"
 	"github.com/edumar111/fastpv-auth/auth/redis"
-	"github.com/edumar111/fastpv-auth/tools"
+	"github.com/edumar111/fastpv-auth/user/service"
 	"log"
 
 	"github.com/edumar111/fastpv-auth/settings"
@@ -64,18 +64,19 @@ func (backend *JWTAuthenticationBackend) GenerateToken(username string) (string,
 
 //Authenticate validate usernama and password
 func (backend *JWTAuthenticationBackend) Authenticate(user *model.UserLogin) bool {
-
-	hashedPassword, _ := tools.HashPassword("123456")
-
+/*
+	hashedPassword, _ := tools.HashPassword("FastGenesis@2019")
+  	fmt.Println(hashedPassword)
 	testUser := model.UserLogin{
 		ID:     0,
-		Username: "edumar111",
+		Username: "AdminFast",
 		Password: string(hashedPassword),
 	}
 
 	//return user.Username == testUser.Username && bcrypt.CompareHashAndPassword([]byte(testUser.Password), []byte(user.Password)) == nil
 	return user.Username == testUser.Username && tools.CheckHashAndPassword(testUser.Password,user.Password)
-
+*/
+	return service.Authenticate(user.Username, user.Password)
 	}
 
 func (backend *JWTAuthenticationBackend) IsInBlacklist(token string) bool {

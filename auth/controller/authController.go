@@ -2,7 +2,6 @@ package controller
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/edumar111/fastpv-auth/auth/model"
 	"github.com/edumar111/fastpv-auth/auth/service"
 	"log"
@@ -15,11 +14,10 @@ func Login(w http.ResponseWriter , r *http.Request){
 	requestUser := new(model.UserLogin)
 	decoder := json.NewDecoder(r.Body)
 	decoder.Decode(&requestUser)
-	fmt.Println(requestUser)
+
 	responseStatus, token := service.Login(requestUser)
 		w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(responseStatus)
-	fmt.Println(string(token))
 	w.Write(token)
 }
 func RefreshToken(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {

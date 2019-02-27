@@ -3,10 +3,12 @@ package tools
 import (
 	"database/sql"
 	"fmt"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/edumar111/fastpv-auth/helper"
 )
 
-func dbConn() (db *sql.DB) {
+//DBConn connect to db
+func DBConn() (db *sql.DB) {
 	dbDriver := "mysql"
 
 	db, err := sql.Open(dbDriver, helper.MysqlHost)
