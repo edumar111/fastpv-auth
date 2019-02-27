@@ -11,7 +11,7 @@ import (
 )
 
 // CreateUser crear usuario
-func CreateUser(w http.ResponseWriter, r *http.Request) {
+func CreateUser(w http.ResponseWriter, r *http.Request,  next http.HandlerFunc) {
 	decoder := json.NewDecoder(r.Body)
 	user := model.User{}
 	err := decoder.Decode(&user)
@@ -29,7 +29,7 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(userUpdate)
 }
 
-func GetUser(w http.ResponseWriter, r *http.Request) {
+func GetUser(w http.ResponseWriter, r *http.Request,  next http.HandlerFunc) {
 	params := mux.Vars(r)
 
 	iduser, err := strconv.ParseInt(params["id"], 10, 64)

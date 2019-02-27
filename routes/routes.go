@@ -4,6 +4,7 @@ import (
 	authController "github.com/edumar111/fastpv-auth/auth/controller"
 	homeController "github.com/edumar111/fastpv-auth/home/controller"
 	"github.com/edumar111/fastpv-auth/routes/model"
+	userController "github.com/edumar111/fastpv-auth/user/controller"
 	"github.com/gorilla/mux"
 )
 
@@ -52,6 +53,18 @@ var routesHandle = model.RoutesHandle{
 		"GET",
 		"/logout",
 		FilterMiddleware(authController.Logout ),
+	},
+	model.RouteHandle{
+		"CreateUser",
+		"POST",
+		"/users",
+		FilterMiddleware(userController.CreateUser ),
+	},
+	model.RouteHandle{
+		"GetUser",
+		"GET",
+		"/users/{id}",
+		FilterMiddleware(userController.GetUser ),
 	},
 	model.RouteHandle{
 		"Test",
