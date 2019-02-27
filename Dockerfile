@@ -16,11 +16,7 @@ COPY --from=builder /go/src/github.com/edumar111/fastpv-auth/settings /settings
 CMD ["/auth"]
 
 # docker login
-# docker build -t edumar111/fastpv-auth:v1.0.2 -f Dockerfile .
-# docker push     edumar111/fastpv-auth:v1.0.2
+# docker build -t edumar111/fastpv-auth:v1.0.3 -f Dockerfile .
+# docker push     edumar111/fastpv-auth:v1.0.3
 
-# docker run  -itd  --name astpv-auth -p 8080:8080 --link fastpv-redis:fastpv-redis -e HOST_REDIS=fastpv-redis -e PORT_REDIS=6380 -e PASS_REDIS=fastpv123 -e GO_ENV=production edumar111/fastpv-auth:v1.0.1
-
-##para correr en los clientes
-# docker run -d -p 5091:5091 --name=banckendservice --add-host="severlocal:192.168.1.38" -e configserver=configserver --link configserver:configserver -e eureka-primary=eureka-primary --link eureka-primary:eureka-primary  -e eureka-secondary=eureka-secondary --link eureka-secondary:eureka-secondary -e eureka-tertiary=eureka-tertiary --link eureka-tertiary:eureka-tertiary -e HOST_HOSTAL=severlocal  -e USER_HOSTAL=melany   -e PASS_HOSTAL=123456 edumar111/backendservice:v1.0.3
-
+# docker run  -itd  --name astpv-auth -p 8080:8080 --link fastpv-redis:fastpv-redis -e HOST_REDIS=fastpv-redis -e PORT_REDIS=6380 -e PASS_REDIS=fastpv123 -e GO_ENV=production edumar111/fastpv-auth:v1.0.3
