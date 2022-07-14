@@ -20,4 +20,4 @@ CMD ["/auth"]
 # docker build -t edumar111/fastpv-auth:1.0.0 -f Dockerfile .
 # docker push     edumar111/fastpv-auth:1.0.0
 
-# docker run  -it  --name astpv-auth -p 8080:8080 --network fastpv  -e HOST_MYSQL=mysql-service-svc -e  HOST_REDIS=redis-service-svc -e GO_ENV=production edumar111/fastpv-auth:1.0.0
+# docker run  -it  --name astpv-auth -p 8080:8080 --network docker_fastpv  -e HOST_MYSQL=mysql-service-svc -e  HOST_REDIS=redis-service-svc -e GO_ENV=production edumar111/fastpv-auth:1.0.0
