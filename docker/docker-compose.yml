@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  redis-service:
+    build: ./redis
+    container_name: redis-service-svc
+    ports:
+    - 6380:6380
+    networks:
+      - fastpv
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-service-svc
+    volumes:
+      - "mysqlfastpv:/var/lib/mysql"
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: securitydb
+      MYSQL_USER: cabin
+      MYSQL_PASSWORD: cabinpw
+    networks:
+      - fastpv
+networks:
+    fastpv:
+      driver: bridge
+volumes:
+  mysqlfastpv:
+    external: true
+# docker volume create mysqlfastpv
