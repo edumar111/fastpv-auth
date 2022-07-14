@@ -1,6 +1,7 @@
 FROM golang:1.11-alpine AS builder
 RUN apk add --update git && apk add build-base  make gcc musl-dev linux-headers
-RUN go get  github.com/edumar111/fastpv-auth
+WORKDIR /go/src/github.com/edumar111
+RUN git clone  https://github.com/edumar111/fastpv-auth.git
 WORKDIR /go/src/github.com/edumar111/fastpv-auth
 
 #RUN CGO_ENABLED=0 GOOS=linux go build   -o /go/bin/myapp *.go
@@ -16,7 +17,7 @@ COPY --from=builder /go/src/github.com/edumar111/fastpv-auth/settings /settings
 CMD ["/auth"]
 
 # docker login
-# docker build -t edumar111/fastpv-auth:v1.0.5 -f Dockerfile .
-# docker push     edumar111/fastpv-auth:v1.0.5
+# docker build -t edumar111/fastpv-auth:1.0.0 -f Dockerfile .
+# docker push     edumar111/fastpv-auth:1.0.0
 
-# docker run  -itd  --name astpv-auth -p 8080:8080 --link fastpv-redis:fastpv-redis -e HOST_REDIS=fastpv-redis -e PORT_REDIS=6380 -e PASS_REDIS=fastpv123 -e GO_ENV=production edumar111/fastpv-auth:v1.0.3
+# docker run  -it  --name astpv-auth -p 8080:8080 --network fastpv  -e HOST_MYSQL=mysql-service-svc -e  HOST_REDIS=redis-service-svc -e GO_ENV=production edumar111/fastpv-auth:1.0.0
